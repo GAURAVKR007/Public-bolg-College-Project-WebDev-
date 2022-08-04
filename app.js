@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Article = require('./models/article')
 const expressLayouts = require('express-ejs-layouts');
+
 // Routes
 const userRouters = require("./routes/user"); 
 
@@ -19,8 +21,11 @@ app.set('view engine','ejs');
 
 // Rout
 
-app.get("/",function(req,res){
-    res.render('index');
+app.get("/",async(req,res) => {
+    const article = await Article.find();
+    res.render('index',{
+        article:article
+    })
 })
 
 // Body Parser 
